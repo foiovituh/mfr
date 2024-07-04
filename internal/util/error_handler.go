@@ -10,8 +10,8 @@ func LogFatalIfErrorIsNotNull(err error) {
 	}
 }
 
-func LogFatalIfTrue(condition *bool, message string) {
-	if *condition {
+func LogFatalIfTrue(condition bool, message string) {
+	if condition {
 		log.Fatal(message)
 	}
 }

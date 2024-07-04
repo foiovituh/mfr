@@ -8,8 +8,8 @@ import (
 	"github.com/foiovituh/mfr/internal/util"
 )
 
-func Rename(directoryPath, newFilesPrefix *string) {
-	files, err := os.ReadDir(*directoryPath)
+func Rename(directoryPath, newFilesPrefix string) {
+	files, err := os.ReadDir(directoryPath)
 
 	util.LogFatalIfErrorIsNotNull(err)
 
@@ -18,8 +18,8 @@ func Rename(directoryPath, newFilesPrefix *string) {
 			continue
 		}
 
-		oldPath := filepath.Join(*directoryPath, file.Name())
-		newPath := *directoryPath + *newFilesPrefix + strconv.Itoa(index) +
+		oldPath := filepath.Join(directoryPath, file.Name())
+		newPath := directoryPath + newFilesPrefix + strconv.Itoa(index) +
 			filepath.Ext(oldPath)
 
 		os.Rename(oldPath, newPath)

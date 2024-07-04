@@ -11,13 +11,13 @@ import (
 func main() {
 	missingArguments := len(os.Args) < 3
 
-	util.LogFatalIfTrue(&missingArguments, static.SpecifyArguments)
+	util.LogFatalIfTrue(missingArguments, static.SpecifyArguments)
 
-	directoryPath := &os.Args[1]
-	newFilePath := &os.Args[2]
+	directoryPath := os.Args[1]
+	newFilePath := os.Args[2]
 
-	if util.LastCharacter(*directoryPath) != static.Slash {
-		*directoryPath = *directoryPath + static.Slash
+	if util.LastCharacter(directoryPath) != static.Slash {
+		directoryPath = directoryPath + static.Slash
 
 	}
 
