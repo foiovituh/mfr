@@ -1,6 +1,7 @@
 package io
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -23,5 +24,7 @@ func Rename(directoryPath, newFilesPrefix string) {
 			filepath.Ext(oldPath)
 
 		os.Rename(oldPath, newPath)
+
+		fmt.Printf("%s -> %s\n", oldPath, newPath)
 	}
 }
