@@ -18,7 +18,7 @@ Go program that renames all files in a directory using a specified pattern.
 ## Quick usage guide 📚
 #### Build:
 ```
-go build --o mfr cmd/main.go
+go build -o mfr cmd/main.go
 ```
 
 <br>
