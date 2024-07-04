@@ -4,11 +4,10 @@ import (
 	"testing"
 
 	"github.com/foiovituh/mfr/internal/static"
-	"github.com/foiovituh/mfr/internal/util"
 )
 
 func TestLastCharacter(t *testing.T) {
-	result := util.LastCharacter("xyz")
+	result := LastCharacter("xyz")
 	expected := "z"
 
 	if result != expected {
