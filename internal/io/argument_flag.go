@@ -3,6 +3,7 @@ package io
 import (
 	"flag"
 	"fmt"
+	"os"
 
 	"github.com/foiovituh/mfr/internal/util"
 )
@@ -15,16 +16,19 @@ type ArgumentFlag struct {
 
 func (af *ArgumentFlag) Get() {
 	af.DirectoryPath = flag.String("d", "",
-		"[REQUIRED] Target directory path to rename all files")
+		"[REQUIRED] Full directory path to rename all files")
 	af.PatternToApply = flag.String("p", "file-",
-		"Pattern apply on file renaming process")
+		"[OPTIONAL] Pattern to apply in the file renaming process")
 	af.ExtensionToFilter = flag.String("e", "",
-		"Only rename files that contain the extension")
+		"[OPTIONAL] Filter files containing the extension")
 	flag.Parse()
 }
 
 func (af ArgumentFlag) Help() {
 	flag.Usage()
+	fmt.Println("\nSee the examples in the README.md file or in the official " +
+		"repository: \n  https://github.com/foiovituh/mfr")
+	os.Exit(0)
 }
 
 func (af *ArgumentFlag) UndeclaredDirectory() bool {

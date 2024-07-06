@@ -29,19 +29,25 @@ go build -o mfr cmd/main.go
 
 #### Arguments:
 ```
-./mfr [/target/directory/path] [pattern]
+  -d=string
+        [REQUIRED] Full directory path to rename all files
+  -e=string
+        [OPTIONAL] Filter files containing the extension
+  -p=string
+        [OPTIONAL] Pattern to apply in the file renaming process (default "file-")
+
 ```
 
 ---
 
-#### Example:
+#### Basic usage example:
 ```
-./mfr /home/user/vitu/test/ file-
+./mfr -d=/home/you/test/
 ```
 
 - Before:
 ```
-/home/user/vitu/test/
+/home/you/test/
 ├── text.txt
 ├── image.png
 ├── document.pdf
@@ -50,17 +56,42 @@ go build -o mfr cmd/main.go
 
 - After:
 ```
-/home/user/vitu/test/
+/home/you/test/
 ├── file-1.txt
 ├── file-2.png
 ├── file-3.pdf
 └── file-4.java
 ```
 
+---
+
+#### Example of pattern customization and extension filter:
+```
+./mfr -d=/home/you/test/ -p=photo -e=.png
+```
+
+- Before:
+```
+/home/you/test/
+├── text.txt
+├── image.png
+├── other-image.png
+├── document.pdf
+└── program.java
+```
+
+- After:
+```
+/home/you/test/
+├── text.txt
+├── photo-1.png
+├── photo-2.png
+├── document.pdf
+└── program.java
+```
+
 ## Future plans 📌
 - Write more tests
-- Filter by file extension
-- Include help commands
 - Allow customized sorting
 - Create a backup of the renamed files
 - Ask for confirmation in important directories
