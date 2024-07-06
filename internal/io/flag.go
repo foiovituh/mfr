@@ -27,11 +27,6 @@ func (f Flags) Help() {
 	flag.Usage()
 }
 
-func (f *Flags) Print() {
-	fmt.Printf("%+v\n%+v\n%+v\n", *f.DirectoryPath, *f.PatternToApply,
-		*f.ExtensionToFilter)
-}
-
 func (f *Flags) UndeclaredDirectory() bool {
 	return *f.DirectoryPath == ""
 }
