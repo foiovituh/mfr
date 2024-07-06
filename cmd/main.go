@@ -5,14 +5,14 @@ import (
 )
 
 func main() {
-	flags := io.Flags{}
-	flags.Get()
+	argumentFlag := io.ArgumentFlag{}
+	argumentFlag.Get()
 
-	if flags.UndeclaredDirectory() {
-		flags.Help()
+	if argumentFlag.UndeclaredDirectory() {
+		argumentFlag.Help()
 	}
 
-	flags.EnsureFinalSlashInDirectory()
+	argumentFlag.EnsureFinalSlashInDirectory()
 
-	io.Rename(&flags)
+	io.Rename(&argumentFlag)
 }
