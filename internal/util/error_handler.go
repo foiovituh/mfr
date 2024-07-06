@@ -4,7 +4,7 @@ import (
 	"log"
 )
 
-func LogFatalIfErrorIsNotNull(err error) {
+func LogFatalIfError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}

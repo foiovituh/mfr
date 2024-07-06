@@ -9,20 +9,20 @@ import (
 	"github.com/foiovituh/mfr/internal/util"
 )
 
-func Rename(flags *Flags) {
-	files, err := os.ReadDir(*flags.DirectoryPath)
-	util.LogFatalIfErrorIsNotNull(err)
+func Rename(argumentFlag *ArgumentFlag) {
+	files, err := os.ReadDir(*argumentFlag.DirectoryPath)
+	util.LogFatalIfError(err)
 
-	oldPathPerExtension := filterFilesByExtension(files, flags)
+	oldPathPerExtension := filterFilesByExtension(files, argumentFlag)
 
 	index := 1
 
 	for oldPath, extension := range oldPathPerExtension {
-		newPath := filepath.Join(*flags.DirectoryPath,
-			*flags.PatternToApply+strconv.Itoa(index)+extension)
+		newPath := filepath.Join(*argumentFlag.DirectoryPath,
+			*argumentFlag.PatternToApply+strconv.Itoa(index)+extension)
 
 		err := os.Rename(oldPath, newPath)
-		util.LogFatalIfErrorIsNotNull(err)
+		util.LogFatalIfError(err)
 
 		fmt.Printf("%s -> %s\n", oldPath, newPath)
 
@@ -31,7 +31,7 @@ func Rename(flags *Flags) {
 }
 
 func filterFilesByExtension(files []os.DirEntry,
-	flags *Flags) map[string]string {
+	argumentFlag *ArgumentFlag) map[string]string {
 	filteredFilesByExtension := make(map[string]string)
 
 	for _, file := range files {
@@ -39,10 +39,10 @@ func filterFilesByExtension(files []os.DirEntry,
 			continue
 		}
 
-		oldPath := filepath.Join(*flags.DirectoryPath, file.Name())
+		oldPath := filepath.Join(*argumentFlag.DirectoryPath, file.Name())
 		extension := filepath.Ext(oldPath)
 
-		if flags.SkipFileExtension(extension) {
+		if argumentFlag.SkipFileExtension(extension) {
 			continue
 		}
 
