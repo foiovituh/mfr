@@ -2,8 +2,6 @@ package util
 
 import (
 	"testing"
-
-	"github.com/foiovituh/mfr/internal/static"
 )
 
 func TestLastCharacter(t *testing.T) {
@@ -11,6 +9,7 @@ func TestLastCharacter(t *testing.T) {
 	expected := "z"
 
 	if result != expected {
-		t.Errorf(static.LastCharacterTest, result, expected)
+		t.Errorf("LastCharacter(\"xyd\") -> result: %s; expected: %s",
+			result, expected)
 	}
 }

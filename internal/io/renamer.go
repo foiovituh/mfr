@@ -9,22 +9,45 @@ import (
 	"github.com/foiovituh/mfr/internal/util"
 )
 
-func Rename(directoryPath, newFilesPrefix string) {
-	files, err := os.ReadDir(directoryPath)
-
+func Rename(flags *Flags) {
+	files, err := os.ReadDir(*flags.DirectoryPath)
 	util.LogFatalIfErrorIsNotNull(err)
 
-	for index, file := range files {
+	oldPathPerExtension := filterFilesByExtension(files, flags)
+
+	index := 1
+
+	for oldPath, extension := range oldPathPerExtension {
+		newPath := filepath.Join(*flags.DirectoryPath,
+			*flags.PatternToApply+strconv.Itoa(index)+extension)
+
+		err := os.Rename(oldPath, newPath)
+		util.LogFatalIfErrorIsNotNull(err)
+
+		fmt.Printf("%s -> %s\n", oldPath, newPath)
+
+		index++
+	}
+}
+
+func filterFilesByExtension(files []os.DirEntry,
+	flags *Flags) map[string]string {
+	filteredFilesByExtension := make(map[string]string)
+
+	for _, file := range files {
 		if file.IsDir() {
 			continue
 		}
 
-		oldPath := filepath.Join(directoryPath, file.Name())
-		newPath := directoryPath + newFilesPrefix + strconv.Itoa(index) +
-			filepath.Ext(oldPath)
+		oldPath := filepath.Join(*flags.DirectoryPath, file.Name())
+		extension := filepath.Ext(oldPath)
 
-		os.Rename(oldPath, newPath)
+		if flags.SkipFileExtension(extension) {
+			continue
+		}
 
-		fmt.Printf("%s -> %s\n", oldPath, newPath)
+		filteredFilesByExtension[oldPath] = extension
 	}
+
+	return filteredFilesByExtension
 }

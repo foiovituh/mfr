@@ -1,25 +1,18 @@
 package main
 
 import (
-	"os"
-
 	"github.com/foiovituh/mfr/internal/io"
-	"github.com/foiovituh/mfr/internal/static"
-	"github.com/foiovituh/mfr/internal/util"
 )
 
 func main() {
-	missingArguments := len(os.Args) < 3
+	flags := io.Flags{}
+	flags.Get()
 
-	util.LogFatalIfTrue(missingArguments, static.SpecifyArguments)
-
-	directoryPath := os.Args[1]
-	newFilePath := os.Args[2]
-
-	if util.LastCharacter(directoryPath) != static.Slash {
-		directoryPath = directoryPath + static.Slash
-
+	if flags.UndeclaredDirectory() {
+		flags.Help()
 	}
 
-	io.Rename(directoryPath, newFilePath)
+	flags.EnsureFinalSlashInDirectory()
+
+	io.Rename(&flags)
 }
